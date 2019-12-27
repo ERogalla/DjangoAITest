@@ -12,6 +12,9 @@ import matplotlib.pyplot as plt
 from keras import Sequential
 from keras.layers import Dense
 
+import pickle
+from sklearn.externals import joblib
+
 df = pd.read_csv('bankloan.csv')
 df = df.dropna()
 df.isna().any() # adds the seperate collums for T/F questions
@@ -40,6 +43,5 @@ classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accur
 classifier.fit(X_train, y_train, batch_size=20, epochs=50, verbose=0)
 eval_model=classifier.evaluate(X_train, y_train)
 
-y_pred=classifier.predict(X_test)
-y_pred=(y_pred>0.52)
-
+filename = 'loan_model.pkl'
+joblib.dump(classifier, filename)
