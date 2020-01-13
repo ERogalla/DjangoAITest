@@ -30,7 +30,11 @@ dm_y = pre_y.map(dict(Y=1, N=0))
 smote = SMOTE(sampling_strategy='minority')
 X1, y = smote.fit_sample(dm_X, dm_y)
 sc = MinMaxScaler()
-X = sc.fit_transform(X1)
+X = sc.fit(X1)
+scalername = 'scalers.pkl'
+joblib.dump(X, scalername)
+
+X = sc.transform(X1)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, shuffle=True)
 
